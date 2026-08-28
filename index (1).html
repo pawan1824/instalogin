@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Instagram</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="page">
+    <div class="card">
+      <div class="logo">Instagram</div>
+      <div class="subtitle"></div>
+
+      <form id="loginForm" autocomplete="off">
+        <label for="username">Phone number, username, or email</label>
+        <input id="username" name="username" type="text" autocomplete="username" required placeholder="Enter demo username" />
+
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" required placeholder="Enter demo password" />
+
+        <button type="submit">Log In</button>
+      </form>
+
+      <a class="link" href="#" onclick="return false;">Forgot password?</a>
+      <div id="status"></div>
+
+      <div class="note">
+        This UI is for teaching frontend layout and safe form design only.
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
