@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>My Sweet Heart 💞</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    background: radial-gradient(circle, #ff4d6d, #1a001a);
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    perspective: 1000px;
+}
+
+/* Heading */
+.text {
+    position: absolute;
+    top: 12%;
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    text-shadow:
+        0 0 10px white,
+        0 0 25px #ff4d6d;
+    animation: glow 2s infinite alternate;
+    z-index: 10;
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 10px white;
+    }
+
+    to {
+        text-shadow:
+            0 0 20px white,
+            0 0 30px #ff99cc;
+    }
+}
+
+/* 3D Photo Ring */
+.ring {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    width: 240px;
+    height: 240px;
+
+    transform-style: preserve-3d;
+    transform: translate(-50%, -50%);
+
+    animation: spin 25s linear infinite;
+}
+
+.ring img {
+    position: absolute;
+
+    width: 120px;
+    height: 160px;
+
+    object-fit: cover;
+
+    border-radius: 12px;
+    border: 3px solid white;
+
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
+}
+
+@keyframes spin {
+    from {
+        transform:
+            translate(-50%, -50%)
+            rotateY(0deg);
+    }
+
+    to {
+        transform:
+            translate(-50%, -50%)
+            rotateY(360deg);
+    }
+}
+
+/* Floating Hearts */
+.heart {
+    position: absolute;
+    bottom: -50px;
+    animation: float 6s linear forwards;
+    z-index: 5;
+    pointer-events: none;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0) scale(0.8);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-110vh) scale(1.4);
+        opacity: 0;
+    }
+}
+
+/* Music Button */
+.play {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    background: white;
+    color: #ff0055;
+
+    padding: 14px 28px;
+
+    border-radius: 50px;
+    border: none;
+
+    font-size: 18px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    box-shadow: 0 0 25px white;
+
+    z-index: 100;
+}
+
+.play:active {
+    transform: translateX(-50%) scale(0.95);
+}
+</style>
+</head>
+
+<body>
+
+<!-- Heading -->
+<div class="text">
+    My Sweet Heart 💞
+</div>
+
+<!-- Photo Ring -->
+<div class="ring" id="ring"></div>
+
+<!-- Music Button -->
+<button class="play" onclick="toggleMusic()" id="pBtn">
+    ▶ Play Music
+</button>
+
+<!-- Music -->
+<audio id="music" loop>
+    <source src="love.jpg/music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+// ==========================
+// PHOTO SETTINGS
+// ==========================
+
+const folder = "love.jpg/";
+
+const photos = [
+    folder + "p1.jpg",
+    folder + "p2.jpg",
+    folder + "p3.jpg",
+    folder + "p4.jpg",
+    folder + "p5.jpg",
+    folder + "p6.jpg",
+    folder + "p7.jpg",
+    folder + "p8.jpg",
+    folder + "p9.jpg",
+    folder + "p10.jpg"
+];
+
+const ring = document.getElementById("ring");
+
+const radius = 220;
+
+
+// Create 3D photos
+photos.forEach((src, i) => {
+
+    const img = document.createElement("img");
+
+    const angle = (360 / photos.length) * i;
+
+    img.src = src;
+    img.alt = "Memory";
+
+    // Photo not found
+    img.onerror = function () {
+        this.style.background = "hotpink";
+    };
+
+    img.style.transform =
+        `rotateY(${angle}deg) translateZ(${radius}px)`;
+
+    ring.appendChild(img);
+});
+
+
+// ==========================
+// FLOATING HEARTS
+// ==========================
+
+const hearts = [
+    "❤️",
+    "💖",
+    "✨",
+    "🌸",
+    "💝"
+];
+
+setInterval(() => {
+
+    const h = document.createElement("div");
+
+    h.className = "heart";
+
+    h.innerHTML =
+        hearts[Math.floor(Math.random() * hearts.length)];
+
+    h.style.left =
+        Math.random() * 100 + "vw";
+
+    h.style.fontSize =
+        Math.random() * 30 + 15 + "px";
+
+    document.body.appendChild(h);
+
+    setTimeout(() => {
+        h.remove();
+    }, 6000);
+
+}, 300);
+
+
+// ==========================
+// MUSIC CONTROL
+// ==========================
+
+const myAudio = document.getElementById("music");
+const btn = document.getElementById("pBtn");
+
+function toggleMusic() {
+
+    if (myAudio.paused) {
+
+        myAudio.play()
+            .then(() => {
+                btn.innerHTML = "⏸ Pause Music";
+                btn.style.opacity = "0.7";
+            })
+            .catch(() => {
+                alert("Music file नहीं मिली या browser ने play नहीं किया।");
+            });
+
+    } else {
+
+        myAudio.pause();
+
+        btn.innerHTML = "▶ Play Music";
+        btn.style.opacity = "1";
+    }
+}
+
+</script>
+
+</body>
+</html>
